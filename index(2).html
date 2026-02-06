@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TrialOps — Pharmacy-Led Clinical Trial Infrastructure for Ireland</title>
+<meta name="description" content="TrialOps delivers decentralised clinical trials through Ireland's community pharmacies. Reliable at scale, fully GCP-compliant.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400&family=Manrope:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --ink:#0A1628;--ink-soft:#364152;--ink-muted:#7B8794;
+  --teal:#0F766E;--teal-bright:#14B8A6;--teal-wash:#F0FDFA;
+  --warm:#DC6843;--warm-wash:#FFF6F0;
+  --green-dark:#1B4332;--green:#2D6A4F;--green-light:#40916C;
+  --sand:#FAF9F6;--white:#FFF;--border:#E8E6E1;
+  --r:16px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Manrope',sans-serif;color:var(--ink);background:var(--white);-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;width:100%;z-index:100;padding:1rem 2.5rem;display:flex;align-items:center;justify-content:space-between;background:rgba(255,255,255,.88);backdrop-filter:blur(24px) saturate(1.4);border-bottom:1px solid transparent;transition:border-color .4s}
+nav.bordered{border-bottom-color:var(--border)}
+.wm{font-family:'Fraunces',serif;font-size:1.35rem;font-weight:700;color:var(--ink);text-decoration:none;letter-spacing:-.03em}
+.wm i{color:var(--teal);font-style:normal}
+.nr{display:flex;align-items:center;gap:2rem}
+.nr a{font-size:.85rem;font-weight:500;color:var(--ink-soft);text-decoration:none;transition:color .25s}
+.nr a:hover{color:var(--ink)}
+.btn{display:inline-flex;align-items:center;gap:.4rem;padding:.6rem 1.4rem;border-radius:100px;font-size:.85rem;font-weight:600;text-decoration:none;transition:all .3s;border:none;cursor:pointer}
+.btn-t{background:var(--teal);color:var(--white)}
+.btn-t:hover{background:#0E6B63;transform:translateY(-1px);box-shadow:0 6px 20px rgba(15,118,110,.25)}
+.btn-o{background:transparent;color:var(--ink-soft);border:1px solid var(--border)}
+.btn-o:hover{border-color:var(--ink-soft);color:var(--ink)}
+.btn svg{width:14px;height:14px}
+.arr{display:inline-block}
+
+/* HERO */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;padding:7rem 2rem 5rem;position:relative;overflow:hidden}
+.hero::before{content:'';position:absolute;inset:0;background:linear-gradient(160deg,var(--green-dark) 0%,#163A2B 40%,#1B4332 100%)}
+.hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 30% 70%,rgba(20,184,166,.1),transparent),radial-gradient(ellipse 50% 50% at 75% 25%,rgba(220,104,67,.06),transparent);pointer-events:none}
+
+/* Subtle topo-map texture */
+.hero-bg{position:absolute;inset:0;opacity:.04;background-image:url("data:image/svg+xml,%3Csvg width='400' height='400' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 200 Q100 180 200 200 T400 200' fill='none' stroke='%23fff' stroke-width='.5'/%3E%3Cpath d='M0 220 Q100 200 200 220 T400 220' fill='none' stroke='%23fff' stroke-width='.5'/%3E%3Cpath d='M0 180 Q100 160 200 180 T400 180' fill='none' stroke='%23fff' stroke-width='.5'/%3E%3Cpath d='M0 240 Q100 220 200 240 T400 240' fill='none' stroke='%23fff' stroke-width='.5'/%3E%3Cpath d='M0 160 Q100 140 200 160 T400 160' fill='none' stroke='%23fff' stroke-width='.5'/%3E%3C/svg%3E");background-size:400px 400px;pointer-events:none}
+
+.hc{position:relative;z-index:2;max-width:720px}
+.badge{display:inline-flex;align-items:center;gap:.5rem;padding:.35rem 1rem;border-radius:100px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);font-size:.72rem;font-weight:600;color:var(--teal-bright);letter-spacing:.06em;text-transform:uppercase;margin-bottom:2rem;animation:fu .7s ease both}
+.bdot{width:6px;height:6px;border-radius:50%;background:var(--teal-bright);animation:pls 2.5s infinite}
+@keyframes pls{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.4;transform:scale(.8)}}
+.hero h1{font-family:'Fraunces',serif;font-size:clamp(2.4rem,5.5vw,4rem);font-weight:700;line-height:1.08;letter-spacing:-.035em;color:var(--white);margin-bottom:1.25rem;animation:fu .7s .1s ease both}
+.hero h1 em{font-style:italic;font-weight:400;color:var(--teal-bright)}
+.hero-sub{font-size:1.1rem;line-height:1.7;color:rgba(255,255,255,.55);font-weight:400;max-width:520px;margin:0 auto 2.5rem;animation:fu .7s .2s ease both}
+.hero-actions{display:flex;gap:.75rem;justify-content:center;flex-wrap:wrap;animation:fu .7s .3s ease both}
+.btn-w{background:var(--white);color:var(--green-dark)}
+.btn-w:hover{background:rgba(255,255,255,.9);transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,0,0,.15)}
+.btn-g{background:transparent;color:rgba(255,255,255,.7);border:1px solid rgba(255,255,255,.2)}
+.btn-g:hover{border-color:rgba(255,255,255,.5);color:var(--white)}
+@keyframes fu{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
+
+/* SECTIONS */
+.s{padding:5.5rem 2rem}
+.si{max-width:1020px;margin:0 auto}
+.sl{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.1em;margin-bottom:.5rem}
+.sl-t{color:var(--teal)}
+.sl-w{color:var(--warm)}
+.st{font-family:'Fraunces',serif;font-size:clamp(1.7rem,3.2vw,2.4rem);font-weight:700;line-height:1.15;letter-spacing:-.025em;color:var(--ink);margin-bottom:.6rem}
+.sd{font-size:1rem;color:var(--ink-muted);font-weight:400;line-height:1.65;max-width:500px}
+
+/* PROBLEM */
+.problem{background:var(--warm-wash);position:relative;overflow:hidden}
+.problem::before{content:'';position:absolute;top:0;right:0;width:35%;height:100%;background:radial-gradient(ellipse at top right,rgba(220,104,67,.05),transparent 70%);pointer-events:none}
+.prob-layout{display:grid;grid-template-columns:1fr 1fr;gap:3.5rem;align-items:center}
+.prob-card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);padding:2.25rem;position:relative}
+.prob-name{font-family:'Fraunces',serif;font-size:1.4rem;font-weight:700;color:var(--ink)}
+.prob-meta{font-size:.8rem;color:var(--ink-muted);margin-bottom:1.25rem}
+.prob-pts{display:flex;flex-direction:column;gap:.6rem}
+.prob-pt{display:flex;align-items:flex-start;gap:.65rem;font-size:.88rem;color:var(--ink-soft);line-height:1.45}
+.prob-dot{width:7px;height:7px;border-radius:50%;background:var(--warm);flex-shrink:0;margin-top:.4rem}
+.prob-right h2{font-family:'Fraunces',serif;font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:700;line-height:1.1;color:var(--ink);margin-bottom:.75rem}
+.prob-right h2 em{font-style:italic;color:var(--warm)}
+.prob-right p{font-size:1rem;color:var(--ink-muted);line-height:1.65}
+.prob-quote{margin-top:1.25rem;padding:.85rem 1.25rem;background:rgba(220,104,67,.06);border-left:3px solid var(--warm);border-radius:0 8px 8px 0;font-size:.85rem;color:var(--ink-soft);font-style:italic}
+
+/* STATS */
+.stats{background:var(--ink);padding:2.5rem 2rem}
+.stats-row{max-width:880px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr)}
+.sc{text-align:center;padding:.5rem .75rem}
+.sv{font-family:'Fraunces',serif;font-size:1.8rem;font-weight:700;color:var(--warm)}
+.sla{font-size:.75rem;color:rgba(255,255,255,.4);margin-top:.2rem;line-height:1.35}
+
+/* SOLUTION */
+.solution{background:var(--white)}
+.cap-grid{display:grid;grid-template-columns:repeat(5,1fr);border:1px solid var(--border);border-radius:var(--r);overflow:hidden;margin-top:2.25rem}
+.cc{padding:1.75rem 1.1rem;text-align:center;border-right:1px solid var(--border);transition:background .3s}
+.cc:last-child{border-right:none}
+.cc:hover{background:var(--teal-wash)}
+.cn{font-family:'Fraunces',serif;font-size:2.2rem;font-weight:700;color:var(--border);line-height:1;margin-bottom:.85rem;transition:color .3s}
+.cc:hover .cn{color:var(--teal-bright)}
+.cc h3{font-size:.85rem;font-weight:700;color:var(--ink);margin-bottom:.4rem}
+.cc p{font-size:.75rem;color:var(--ink-muted);line-height:1.5}
+.gcp{margin-top:.85rem;padding:.75rem 1.25rem;background:var(--teal-wash);border:1px solid rgba(15,118,110,.1);border-radius:100px;text-align:center;font-size:.8rem;color:var(--teal);font-weight:600}
+
+/* HOW */
+.how{background:var(--sand)}
+.how-flow{display:flex;margin:2rem 0}
+.hs{flex:1;text-align:center;padding:0 .6rem;position:relative}
+.hs::after{content:'→';position:absolute;top:1rem;right:-.4rem;font-size:.9rem;color:var(--border);font-weight:300}
+.hs:last-child::after{display:none}
+.hsc{width:44px;height:44px;border-radius:50%;background:var(--white);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;margin:0 auto .65rem;font-family:'Fraunces',serif;font-size:1rem;font-weight:700;color:var(--ink-muted);transition:all .3s}
+.hs:hover .hsc{border-color:var(--teal);color:var(--teal);background:var(--teal-wash)}
+.hs h4{font-size:.82rem;font-weight:700;color:var(--ink);margin-bottom:.2rem}
+.hs p{font-size:.72rem;color:var(--ink-muted);line-height:1.4}
+.how-extras{display:grid;grid-template-columns:repeat(3,1fr);gap:.65rem}
+.he{background:var(--white);border:1px solid var(--border);border-radius:10px;padding:.85rem 1rem;display:flex;align-items:center;gap:.65rem}
+.he-i{font-size:1.1rem;flex-shrink:0}
+.he h5{font-size:.8rem;font-weight:600;color:var(--ink)}
+.he span{font-size:.72rem;color:var(--ink-muted)}
+
+/* IMPACT */
+.impact{background:var(--white)}
+.imp-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:.65rem;margin-top:2.25rem}
+.ic{background:var(--sand);border:1px solid var(--border);border-radius:var(--r);padding:1.5rem .85rem;text-align:center;transition:all .35s}
+.ic:hover{transform:translateY(-3px);box-shadow:0 8px 28px rgba(0,0,0,.05);border-color:var(--teal)}
+.iv{font-family:'Fraunces',serif;font-size:1.8rem;font-weight:700;color:var(--teal)}
+.in{font-size:.8rem;font-weight:600;color:var(--ink);margin:.25rem 0 .1rem}
+.is{font-size:.7rem;color:var(--ink-muted)}
+
+/* WHY NOW */
+.why{background:var(--green-dark);color:var(--white);position:relative;overflow:hidden}
+.why::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 75% 30%,rgba(20,184,166,.08),transparent);pointer-events:none}
+.why .sl{color:var(--teal-bright)}
+.why .st{color:var(--white)}
+.why .sd{color:rgba(255,255,255,.45)}
+.why-grid{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem;margin-top:2rem;position:relative;z-index:2}
+.why-cards{display:flex;flex-direction:column;gap:.65rem}
+.wc{padding:1.15rem 1.35rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:12px;transition:background .3s}
+.wc:hover{background:rgba(255,255,255,.07)}
+.wc h4{font-size:.85rem;font-weight:600;color:var(--teal-bright);margin-bottom:.3rem}
+.wc p{font-size:.8rem;color:rgba(255,255,255,.42);line-height:1.5}
+.why-hl{display:flex;flex-direction:column;gap:1rem}
+.why-box{background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.07);border-radius:16px;padding:2rem;text-align:center}
+.why-box small{font-size:.68rem;font-weight:700;color:var(--teal-bright);text-transform:uppercase;letter-spacing:.07em}
+.why-box .big{font-family:'Fraunces',serif;font-size:2.8rem;font-weight:700;color:var(--white);line-height:1.1;margin:.35rem 0}
+.why-box p{font-size:.85rem;color:rgba(255,255,255,.5)}
+.why-box2{background:linear-gradient(145deg,rgba(220,104,67,.1),rgba(245,158,11,.06));border:1px solid rgba(220,104,67,.18);border-radius:16px;padding:1.5rem;text-align:center}
+.why-box2 .big2{font-family:'Fraunces',serif;font-size:1.8rem;font-weight:700;color:var(--white);margin-bottom:.25rem}
+.why-box2 p{font-size:.82rem;color:rgba(255,255,255,.5)}
+
+/* CTA */
+.cta{padding:5rem 2rem;background:var(--teal-wash);text-align:center;position:relative}
+.cta::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 50% 80% at 50% 100%,rgba(15,118,110,.04),transparent);pointer-events:none}
+.cta-in{position:relative;z-index:2;max-width:520px;margin:0 auto}
+.cta h2{font-family:'Fraunces',serif;font-size:clamp(1.7rem,3vw,2.2rem);font-weight:700;line-height:1.15;color:var(--ink);margin-bottom:.6rem}
+.cta p{font-size:.95rem;color:var(--ink-muted);line-height:1.6;margin-bottom:1.75rem}
+
+/* FOOTER */
+footer{padding:1.5rem 2.5rem;background:var(--white);border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+footer .wm{font-size:1.1rem;color:var(--ink-muted)}
+footer p{font-size:.72rem;color:var(--ink-muted)}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(24px);transition:opacity .7s ease,transform .7s ease}
+.rv.on{opacity:1;transform:translateY(0)}
+
+/* RESPONSIVE */
+@media(max-width:900px){
+  nav{padding:.85rem 1.25rem}
+  .nr a:not(.btn){display:none}
+  .prob-layout{grid-template-columns:1fr;gap:2rem}
+  .cap-grid{grid-template-columns:repeat(2,1fr)}
+  .cc{border-bottom:1px solid var(--border)}
+  .cc:nth-child(even){border-right:none}
+  .cc:last-child{border-bottom:none}
+  .imp-grid{grid-template-columns:repeat(2,1fr)}
+  .how-flow{flex-wrap:wrap}
+  .hs{flex:0 0 33%;margin-bottom:1.25rem}
+  .hs::after{display:none}
+  .how-extras{grid-template-columns:1fr}
+  .why-grid{grid-template-columns:1fr}
+  .stats-row{grid-template-columns:repeat(2,1fr);gap:.75rem}
+  footer{flex-direction:column;gap:.4rem;text-align:center}
+}
+@media(max-width:600px){
+  .hero{padding:6.5rem 1.25rem 3.5rem}
+  .s{padding:3.5rem 1.25rem}
+  .cap-grid{grid-template-columns:1fr}
+  .cc{border-right:none;border-bottom:1px solid var(--border)}
+  .imp-grid{grid-template-columns:1fr 1fr}
+  .hs{flex:0 0 50%}
+}
+</style>
+</head>
+<body>
+
+<nav id="nav">
+  <a href="#" class="wm">Trial<i>Ops</i></a>
+  <div class="nr">
+    <a href="#solution">Solution</a>
+    <a href="#impact">Impact</a>
+    <a href="#why">Why Ireland</a>
+    <a href="#contact" class="btn btn-t">Get in Touch <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hc">
+    <div class="badge"><div class="bdot"></div> TrialOps-as-a-Service</div>
+    <h1>Clinical trials delivered through Ireland's <em>community pharmacies</em></h1>
+    <p class="hero-sub">Pharmacy-led infrastructure for decentralised clinical trials. Reliable at scale, fully GCP-compliant. Launching from Limerick.</p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn btn-w">Partner With Us <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+      <a href="#solution" class="btn btn-g">How It Works</a>
+    </div>
+  </div>
+</section>
+
+<!-- PROBLEM -->
+<section class="s problem" id="problem">
+  <div class="si">
+    <div class="prob-layout rv">
+      <div class="prob-card">
+        <div class="prob-name">Sarah, Age 67</div>
+        <div class="prob-meta">Rural County Clare · Lives with COPD</div>
+        <div class="prob-pts">
+          <div class="prob-pt"><div class="prob-dot"></div> Qualifies for groundbreaking respiratory trial</div>
+          <div class="prob-pt"><div class="prob-dot"></div> Nearest site in Limerick — 35 miles away</div>
+          <div class="prob-pt"><div class="prob-dot"></div> She declines. Another voice lost.</div>
+          <div class="prob-pt"><div class="prob-dot"></div> Geography excludes thousands across Ireland</div>
+        </div>
+      </div>
+      <div class="prob-right">
+        <div class="sl sl-w">The Problem</div>
+        <h2>35 miles or <em>opt out</em></h2>
+        <p>Patients like Sarah are excluded from clinical trials not because they're ineligible — but because the nearest trial site is too far away.</p>
+        <div class="prob-quote">Geography shouldn't determine who gets to participate in advancing medicine.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- STATS -->
+<div class="stats">
+  <div class="stats-row">
+    <div class="sc"><div class="sv">30–40%</div><div class="sla">Device setup failures in current DCTs</div></div>
+    <div class="sc"><div class="sv">50%+</div><div class="sla">Data completeness issues</div></div>
+    <div class="sc"><div class="sv">2×</div><div class="sla">Dropout when logistics fail</div></div>
+    <div class="sc"><div class="sv">£2.5–5K</div><div class="sla">Cost per protocol deviation</div></div>
+  </div>
+</div>
+
+<!-- SOLUTION -->
+<section class="s solution" id="solution">
+  <div class="si">
+    <div class="rv">
+      <div class="sl sl-t">The Platform</div>
+      <h2 class="st">Five Integrated Capabilities</h2>
+      <p class="sd">End-to-end infrastructure for decentralised trial delivery through Ireland's community pharmacy network.</p>
+    </div>
+    <div class="cap-grid rv">
+      <div class="cc"><div class="cn">01</div><h3>Device Logistics</h3><p>Kitting, configuration, tracked distribution with chain-of-custody</p></div>
+      <div class="cc"><div class="cn">02</div><h3>Participant Onboarding</h3><p>Device setup, training, troubleshooting at pharmacy hubs</p></div>
+      <div class="cc"><div class="cn">03</div><h3>Compliance Intelligence</h3><p>Real-time dashboards with escalation and predictive alerts</p></div>
+      <div class="cc"><div class="cn">04</div><h3>Clinical Services</h3><p>Vitals, phlebotomy, assessments via pharmacy partners</p></div>
+      <div class="cc"><div class="cn">05</div><h3>Sample Logistics</h3><p>Handover, temp-controlled packaging, GCP documentation</p></div>
+    </div>
+    <div class="gcp rv">GCP-aligned operational logs · Transparency-ready participant workflows</div>
+  </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="s how">
+  <div class="si">
+    <div class="rv">
+      <div class="sl sl-t">How It Works</div>
+      <h2 class="st">The Community Journey</h2>
+      <p class="sd">From referral to data collection — all through local Irish pharmacies.</p>
+    </div>
+    <div class="how-flow rv">
+      <div class="hs"><div class="hsc">1</div><h4>Referral</h4><p>Local pharmacy appointment within days</p></div>
+      <div class="hs"><div class="hsc">2</div><h4>Pharmacy Hub</h4><p>In-person enrolment and setup</p></div>
+      <div class="hs"><div class="hsc">3</div><h4>Device Onboarding</h4><p>Setup, usability checks, troubleshooting</p></div>
+      <div class="hs"><div class="hsc">4</div><h4>Ongoing Support</h4><p>Drop-in help, reminders, escalations</p></div>
+      <div class="hs"><div class="hsc">5</div><h4>Sample Pathway</h4><p>Handover → packaging → courier</p></div>
+    </div>
+    <div class="how-extras rv">
+      <div class="he"><div class="he-i">🩺</div><div><h5>Clinical Services</h5><span>Vitals, phlebotomy, assessments</span></div></div>
+      <div class="he"><div class="he-i">📱</div><div><h5>Multichannel Comms</h5><span>SMS, email, app notifications</span></div></div>
+      <div class="he"><div class="he-i">📍</div><div><h5>Local Access</h5><span>15–20 min vs. 45+ min to hospital</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- IMPACT -->
+<section class="s impact" id="impact">
+  <div class="si">
+    <div class="rv" style="text-align:center;display:flex;flex-direction:column;align-items:center">
+      <div class="sl sl-t">Business Impact</div>
+      <h2 class="st">Measurably Better Trials</h2>
+      <p class="sd" style="margin:0 auto">Quantified value across key trial metrics.</p>
+    </div>
+    <div class="imp-grid rv">
+      <div class="ic"><div class="iv">40–50%</div><div class="in">Faster Recruitment</div><div class="is">Local pharmacy access</div></div>
+      <div class="ic"><div class="iv">25–35%</div><div class="in">Higher Retention</div><div class="is">Community support</div></div>
+      <div class="ic"><div class="iv">30%+</div><div class="in">Better Data Quality</div><div class="is">vs. baseline DCTs</div></div>
+      <div class="ic"><div class="iv">60%</div><div class="in">Fewer Deviations</div><div class="is">Proactive monitoring</div></div>
+      <div class="ic"><div class="iv">40–50%</div><div class="in">Cost Savings</div><div class="is">vs. home visit models</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY IRELAND, WHY NOW -->
+<section class="s why" id="why">
+  <div class="si">
+    <div class="rv">
+      <div class="sl">Why Ireland, Why Now</div>
+      <h2 class="st">The Limerick Launchpad</h2>
+      <p class="sd">University of Limerick partnerships, national DCT investment, and Ireland's pharmacy network create the perfect foundation.</p>
+    </div>
+    <div class="why-grid rv">
+      <div class="why-cards">
+        <div class="wc"><h4>UL Partnerships Ready</h4><p>Edwards Lifesciences MedTech, Health Research Institute (Prof Crowley — wearables/IoMT), Rapid Innovation Unit</p></div>
+        <div class="wc"><h4>€4M National DCT Investment</h4><p>ICON plc government funding proves Ireland's commitment to decentralised trial infrastructure</p></div>
+        <div class="wc"><h4>1,800+ Community Pharmacies</h4><p>Ireland's pharmacy network reaches every community — trusted, accessible, clinically capable</p></div>
+        <div class="wc"><h4>70% Consumer Acceptance</h4><p>Irish patients are ready for pharmacy-delivered clinical services — with Abbott, Dexcom, and Stryker in the ecosystem</p></div>
+      </div>
+      <div class="why-hl">
+        <div class="why-box">
+          <small>Ireland Launch Market</small>
+          <div class="big">~50</div>
+          <p>DCT/hybrid trials per year — with ~82,500 participant-years total opportunity</p>
+        </div>
+        <div class="why-box2">
+          <div class="big2">Early Mover Advantage</div>
+          <p>First infrastructure wins strategic partnerships and defines standards for the next decade</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section class="cta" id="contact">
+  <div class="cta-in rv">
+    <h2>Ready to bring clinical trials to every community in Ireland?</h2>
+    <p>Partner with TrialOps to deliver reliable, pharmacy-led DCT infrastructure — starting from Limerick.</p>
+    <a href="mailto:hello@trialops.io" class="btn btn-t">Get in Touch <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h10M9 4l4 4-4 4"/></svg></a>
+  </div>
+</section>
+
+<footer>
+  <a href="#" class="wm">Trial<i>Ops</i></a>
+  <p>© 2026 TrialOps · Limerick, Ireland</p>
+</footer>
+
+<script>
+window.addEventListener('scroll',()=>{document.getElementById('nav').classList.toggle('bordered',scrollY>40)});
+const o=new IntersectionObserver(e=>{e.forEach(e=>{if(e.isIntersecting)e.target.classList.add('on')})},{threshold:.12,rootMargin:'0px 0px -30px 0px'});
+document.querySelectorAll('.rv').forEach(el=>o.observe(el));
+document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{e.preventDefault();document.querySelector(a.getAttribute('href'))?.scrollIntoView({behavior:'smooth'})})});
+</script>
+</body>
+</html>
